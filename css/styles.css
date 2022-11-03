@@ -1,131 +1,90 @@
-/* Global styles */
-
 @font-face {
   font-family: 'Vanilla Whale';
   src: url('../fonts/vanilla-whale.otf');
 }
 
 body {
-  margin: 0px;
-
   color: #F8F9FA;
   background-color: #016f32;
   text-align: center;
-  font-weight: bold;
+  font-weight: 800;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 button {
   padding: 15px 30px;
-
   color: #016f32;
-  background: #EDC531;
-
+  background: goldenrod;
   font-size: 20px;
-  font-weight: bold;
-
+  font-weight: 800;
   border: none;
   border-radius: 5px;
+  text-shadow: 0px 0px 2px gray;
 }
 
-hr {
-  width: 25%;
-  color: #F8F9FA;
+button:hover,
+#five-chips:hover,
+#ten-chips:hover,
+#twenty-chips:hover,
+#twenty-five-chips:hover,
+#fifty-chips:hover,
+#hundred-chips:hover {
+  color: goldenrod;
+  background-color: #0f8a46;
 }
 
-/* Title section */
+button:active,
+#five-chips:active,
+#ten-chips:active,
+#twenty-chips:active,
+#twenty-five-chips:active,
+#fifty-chips:active,
+#hundred-chips:active {
+  color: #3C4048;
+  background-color: #F8F9FA;
+}
+
+hr { width: 400px; color: #F8F9FA; }
+
+.container {
+  width: 700px;
+  margin: 12px auto;
+  border: 4px solid goldenrod;
+  border-radius: 20px;
+  background-color: #1E5631;
+}
 
 #title {
-  margin-block: 35px;
+  margin-block: 30px;
+  color: #999;
   font-size: 50px;
   font-family: 'Vanilla Whale', sans-serif;
 }
 
-#blackjack-logo {
-  color: #EDC531;
-}
+#blackjack-logo { color: #EDC531; }
 
-/* Game section */
+#message-el { margin-bottom: 30px; font-size: 25px; }
 
-#message-el {
-  margin: 0px 0px 35px 0px;
-  font-size: 25px;
-}
-
-.button-box {
-  margin-bottom: 35px;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-}
-
-/* Player card section */
-
-#player-card-section {
-  margin-block: 35px;
-  font-size: 25px;
-}
-
-/* Dealer card section */
-
-#dealer-card-section {
-  margin-block: 35px;
-  font-size: 25px;
-}
-
-/* Betting area */
-
-.button-box-two {
-  margin-block:  35px;
-
+.buttons-box {
+  margin-block: 30px;
   display: grid;
-  grid-gap: 20px;
+  grid-gap: 10px;
   justify-content: center;
-  align-items: center;
-
+  align-content: center;
   grid-template-columns: repeat(2, 200px);
 }
 
-#player-el {
-  font-size: 25px;
-  margin-block: 35px;
+#card-section { margin-block: 30px; font-size: 25px; }
+
+#balance-el {
+  margin-block: 30px;
+  font-size: 40px;  
+  font-family: 'Vanilla Whale', sans-serif;
 }
 
-#five-chips {
-  color: #F8F9FA;
-  background-color: #EF8677;
-  text-shadow: 0px 0px 2px gray;
-}
-
-#ten-chips {
-  color: #F8F9FA;
-  background-color: #82B6D9;
-  text-shadow: 0px 0px 2px gray;
-}
-
-#twenty-chips {
-  color: #F8F9FA;
-  background-color: lightgray;
-  text-shadow: 0px 0px 2px black;
-}
-
-#twenty-five-chips {
-  color: #F8F9FA;
-  background-color: #A0E77D;
-  text-shadow: 0px 0px 2px gray;
-}
-
-#fifty-chips {
-  color: #F8F9FA;
-  background-color: coral;
-  text-shadow: 0px 0px 2px gray;
-}
-
-#hundred-chips {
-  color: #F8F9FA;
-  background-color: #3C4048;
-  text-shadow: 0px 0px 2px lightgray;
-}
+#five-chips { color: #F8F9FA; background-color: #EF8677; }
+#ten-chips { color: #F8F9FA; background-color: #82B6D9; }
+#twenty-chips { color: #F8F9FA; background-color: lightgray; }
+#twenty-five-chips { color: #F8F9FA; background-color: #A0E77D; }
+#fifty-chips { color: #F8F9FA; background-color: coral; }
+#hundred-chips { color: #F8F9FA; background-color: #3C4048; }
