@@ -76,6 +76,13 @@ hr { width: 400px; color: #F8F9FA; }
 
 #card-section { margin-block: 30px; font-size: 25px; }
 
+#bet-el {
+  margin-block: 30px;
+  color: #ccc;
+  font-size: 30px;
+  font-family: 'Vanilla Whale', sans-serif;
+}
+
 #balance-el {
   margin-block: 30px;
   font-size: 40px;  
