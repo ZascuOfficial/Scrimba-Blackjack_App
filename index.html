@@ -25,7 +25,7 @@
         <span id="blackjack-logo">Blackjack</span>
       </h1>
 
-      <p id="message-el">Would you like to play a round?</p>
+      <p id="message-el">Would you like to play a round? If so, place your bets!</p>
 
       <div class="buttons-box">
         <button onclick="startGame()">START GAME</button>
@@ -53,12 +53,12 @@
       <p id="balance-el"></p>
 
       <div class="buttons-box">
-        <button id="five-chips" onclick="bet()">BET 5</button>
-        <button id="ten-chips" onclick="bet()">BET 10</button>
-        <button id="twenty-chips" onclick="bet()">BET 20</button>
-        <button id="twenty-five-chips" onclick="bet()">BET 25</button>
-        <button id="fifty-chips" onclick="bet()">BET 50</button>
-        <button id="hundred-chips" onclick="bet()">BET 100</button>
+        <button id="five-chips" onclick="betAmount(5)">BET 5</button>
+        <button id="ten-chips" onclick="betAmount(10)">BET 10</button>
+        <button id="twenty-chips" onclick="betAmount(20)">BET 20</button>
+        <button id="twenty-five-chips" onclick="betAmount(25)">BET 25</button>
+        <button id="fifty-chips" onclick="betAmount(50)">BET 50</button>
+        <button id="hundred-chips" onclick="betAmount(100)">BET 100</button>
       </div>
 
     </div>
