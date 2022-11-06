@@ -6,4 +6,4 @@ Scrimba Course - https://scrimba.com/learn/learnjavascript
 
 My Twitter - https://twitter.com/ZascuOfficial
 
-The Website Page - (Unknown)
+The Website Page - https://zascuofficial.github.io/Scrimba-Blackjack_App/
