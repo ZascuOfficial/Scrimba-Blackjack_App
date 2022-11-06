@@ -1,63 +1,105 @@
-let playerCards = [];
-let playerSum = 0;
-let dealerCards = [];
-let dealerSum = 0;
+let player = {
+  balance: 10,
+  bet: 0,
 
-let bet = 0;
-let balance = 10;
+  cards: [],
+  firstCard: 0,
+  secondCard: 0,
+  sum: 0,
 
-let isAlive = false;
-let hasBlackjack = false;
+  isAlive: false,
+  hasBlackjack: false,
 
-const messageEl = document.getElementById('message-el');
+  displayCards: () => {
+  
+    playerCardsEl.textContent = 'Your cards: ';
 
-const playerCardsEl = document.getElementById('player-cards-el');
-const playerSumEl = document.getElementById('player-sum-el');
-const dealerCardsEl = document.getElementById('dealer-cards-el');
-const dealerSumEl = document.getElementById('dealer-sum-el');
+    for (let i = 0; i < player.cards.length; i++) {
+      playerCardsEl.textContent += player.cards[i] + ' ';
+    }
+
+    playerSumEl.textContent = `Your sum: ${player.sum}`;
+
+  },
+
+  checkCards: () => {
+
+    if (player.sum < 21) {
+      message = 'Do you wish to draw another card?';
+    } else if (player.sum === 21 && dealer.sum !== player.sum) {
+      message = 'You got blackjack, partner!';
+    } else {
+      player.isAlive = false;
+
+      message = 'You\'re out of the game, pal.';
+    }
+
+  }
+};
+
+let dealer = {
+  cards: [],
+  firstCard: 0,
+  secondCard: 0,
+  sum: 0,
+
+  displayCards: () => {
+
+    dealerCardsEl.textContent = 'Dealer cards: ';
+
+    for (let i = 0; i < dealer.cards.length; i++) {
+      dealerCardsEl.textContent += dealer.cards[i] + ' ';
+    }
+
+    dealerSumEl.textContent = `Dealer sum: ${dealer.sum}`;
+
+  }
+};
 
 const betEl = document.getElementById('bet-el');
 const balanceEl = document.getElementById('balance-el');
 
+const playerCardsEl = document.getElementById('player-cards-el');
+const dealerCardsEl = document.getElementById('dealer-cards-el');
+
+const playerSumEl = document.getElementById('player-sum-el');
+const dealerSumEl = document.getElementById('dealer-sum-el');
+
+let message = '';
+const messageEl = document.getElementById('message-el');
+
 function startGame() {
-  if (balance != 0) {
-    isAlive = true;
-    hasBlackjack = false;
-  
-    let playerFirstCard = getRandomCard(),
-      playerSecondCard = getRandomCard();
-    
-    let dealerFirstCard = getRandomCard(),
-      dealerSecondCard = getRandomCard();
-    
-    playerCards = [playerFirstCard, playerSecondCard];
-    dealerCards = [dealerFirstCard, dealerSecondCard];
-  
-    playerSum = playerFirstCard + playerSecondCard;
-    dealerSum = dealerFirstCard + dealerSecondCard;
-  
+  if (player.balance > 0) {
+    messageEl.style.color = '#F8F9FA';
+
+    player.isAlive = true;
+    player.hasBlackjack = false;
+
+    initializeCards();
+
     renderGame();
   } else {
-    bet = 0;
-    balance = 0;
-    playerCards = [];
-    dealerCards = [];
-    playerSum = 0;
-    dealerSum = 0;
+    player.firstCard = 0, player.secondCard = 0, player.sum = 0,
+      dealer.firstCard = 0, dealer.secondCard = 0, dealer.sum = 0,
+      player.cards = [], dealer.cards = [];
     
-    renderGame();
+    message = 'You ran outta money. Scram!';
 
-    messageEl.textContent = 'You ran outta money. Scram!';
+    messageEl.textContent = message;
     messageEl.style.color = '#EF8677';
   }
 }
 
 function renderGame() {
-  betEl.textContent = `Your Bet: \$${bet}`;
-  balanceEl.textContent = `Your Balance: \$${balance}`;
+  betEl.textContent = `Your Bet: \$${player.bet}`;
+  balanceEl.textContent = `Your Balance: \$${player.balance}`;
 
-  displayPlayer();
-  displayDealer();
+  player.displayCards();
+  dealer.displayCards();
+
+  player.checkCards();
+
+  messageEl.textContent = message;
 }
 
 function getRandomCard() {
@@ -74,12 +116,12 @@ function getRandomCard() {
 }
 
 function newCard() {
-  if (isAlive && !hasBlackjack) {
+  if (player.isAlive && !player.hasBlackjack) {
     let newCard = getRandomCard();
 
-    playerSum += newCard;
+    player.sum += newCard;
 
-    playerCards.push(newCard);
+    player.cards.push(newCard);
 
     renderGame();
   }
@@ -88,92 +130,92 @@ function newCard() {
 function withdraw() {
   isAlive = false;
 
-  while (dealerSum <= 17) {
+  while (dealer.sum <= 17) {
     let newCard = getRandomCard();
     
-    dealerCards.push(newCard);
+    dealer.cards.push(newCard);
 
-    dealerSum += newCard;
+    dealer.sum += newCard;
 
     renderGame();
   }
 
-  let message = '';
-
-  if (dealerSum < playerSum) {
-    message = 'You win, sherif!';
-    balance += bet * 2;
-    bet = 0;
-  } else if (dealerSum === playerSum) {
-    message = 'Tie...';
-    balance = bet;
-    bet = 0;
-  } else if (dealerSum > playerSum && !(dealerSum > 21)) {
-    message = 'The house wins!';
-    bet = 0;
-  } else if (dealerSum > 21) {
-    message = 'You win, sheriff!';
-    balance += bet * 2;
-    bet = 0;
-  }
-
-  messageEl.textContent = message;
+  compareSums();
 }
 
 function betAmount(amount) {
-  if (balance > 0) {
-    bet += amount;
-    balance -= amount;
+  if (player.balance > 0 && amount <= player.balance) {
+    player.bet += amount;
+    player.balance -= amount;
   }
 
   renderGame();
 }
 
-function displayPlayer() {
-  playerCardsEl.textContent = 'Your cards: ';
-  for (let i = 0; i < playerCards.length; i++) {
-    playerCardsEl.textContent += playerCards[i] + ' ';
+
+function initializeCards() {
+  player.firstCard = getRandomCard();
+  player.secondCard = getRandomCard();
+  player.cards = [player.firstCard, player.secondCard];
+
+  player.sum = player.firstCard + player.secondCard;
+
+  dealer.firstCard = getRandomCard();
+  dealer.secondCard = getRandomCard();
+  dealer.cards = [dealer.firstCard, dealer.secondCard];
+
+  dealer.sum = dealer.firstCard + dealer.secondCard;
+}
+
+function compareSums() {
+  if (dealer.sum === 21) {
+    player.isAlive = false;
+
+    message = 'The house got blackjack!';
+
+    messageEl.textContent = message;
+
+    setBalAndBet(player.balance, 0);
+
+    return;
   }
 
-  playerSumEl.textContent = `Your sum: ${playerSum}`;
+  if (player.sum < dealer.sum && !dealer.sum > 21) {
 
-  let message = '';
+    player.isAlive = false;
 
-  if (playerSum < 21)
-    message = 'Do you wish to draw another card?';
-  else if (playerSum === 21) {
-    message = 'You got blackjack, partner!';
+    message = 'You\'re out of the game, pal';
 
-    hasBlackjack = true;
+    setBalAndBet(player.balance, 0);
 
-    balance += bet * 2.5;
-    bet = 0;
+  } else if (player.sum === dealer.sum) {
+
+    message = 'It\'s a tie!';
+    
+    setBalAndBet(player.balance, 0);  
+
+  } else if (dealer.sum > player.sum) {
+
+    if (dealer.sum > 21) {
+      message = 'You win, sheriff!';
+
+      setBalAndBet(player.balance + player.bet * 2, 0);
+    } else {
+      message = 'The house wins!';
+
+      setBalAndBet(player.balance, 0);
+    }
+
   } else {
-    message = 'You\'re out of the game, pal.';
+    message = 'You win, sheriff!';
 
-    isAlive = false;
-
-    bet = 0;
+    setBalAndBet(player.balance + player.bet * 2, 0);
   }
 
   messageEl.textContent = message;
 }
 
-function displayDealer() {
-  dealerCardsEl.textContent = 'Dealer cards: ';
-  for (let i = 0; i < dealerCards.length; i++) {
-    dealerCardsEl.textContent += dealerCards[i] + ' ';
-  }
-
-  dealerSumEl.textContent = `Dealer sum: ${dealerSum}`;
-
-  if (dealerSum === 21) {
-    let message = 'The house wins!';
-
-    messageEl.textContent = message;
-
-    isAlive = false;
-
-    bet = 0;
-  }
+function setBalAndBet(balance, bet) {
+  player.balance = balance;
+  player.bet = bet;
 }
